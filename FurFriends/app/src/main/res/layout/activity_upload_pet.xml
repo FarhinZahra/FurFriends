@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FEEFE6"
     android:fillViewport="true"
-    tools:context=".UploadPetActivity">
+    tools:context=".ui.pets.UploadPetActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -81,11 +81,11 @@
                 android:layout_height="wrap_content"
                 android:hint="Weight (e.g., 15 kg)"/>
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/et_pet_location_upload"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Location (e.g., Bursa, Türkiye)"/>
+                android:hint="Location (Dhaka area)"/>
 
             <EditText
                 android:id="@+id/et_pet_story_upload"
@@ -99,3 +99,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
+

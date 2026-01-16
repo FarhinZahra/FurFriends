@@ -9,6 +9,7 @@ data class Location(
     @DocumentId
     val id: String = "",
     val name: String = "",
+    val city: String = "",
     val address: String = "",
     val distance: String = "", // This could be calculated on the client side later
     val imageUrl: String = ""

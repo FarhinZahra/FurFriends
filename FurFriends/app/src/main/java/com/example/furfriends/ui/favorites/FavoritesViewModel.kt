@@ -14,6 +14,9 @@ class FavoritesViewModel : ViewModel() {
     private val _favoritePets = MutableLiveData<List<Pet>>()
     val favoritePets: LiveData<List<Pet>> = _favoritePets
 
+    private val _toggleStatus = MutableLiveData<Result<Unit>>()
+    val toggleStatus: LiveData<Result<Unit>> = _toggleStatus
+
     fun loadFavoritePets() {
         viewModelScope.launch {
             val result = repository.getFavoritePets()
@@ -23,6 +26,13 @@ class FavoritesViewModel : ViewModel() {
             result.onFailure {
                 // Handle the error here if needed
             }
+        }
+    }
+
+    fun toggleFavorite(petId: String) {
+        viewModelScope.launch {
+            val result = repository.toggleFavorite(petId)
+            _toggleStatus.postValue(result)
         }
     }
 }

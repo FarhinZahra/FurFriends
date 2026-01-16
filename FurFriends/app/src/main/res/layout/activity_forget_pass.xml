@@ -108,7 +108,7 @@
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_email_example" />
+            app:layout_constraintTop_toBottomOf="@+id/et_email" />
 
         <!-- Info Text -->
         <TextView

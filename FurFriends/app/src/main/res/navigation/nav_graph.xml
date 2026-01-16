@@ -7,19 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.furfriends.LocationFragment"
-        android:label="fragment_location"
+        android:name="com.example.furfriends.ui.home.HomeFeedFragment"
+        android:label="fragment_home_feed"
+        tools:layout="@layout/fragment_home_feed" />
+
+    <fragment
+        android:id="@+id/navigation_pets"
+        android:name="com.example.furfriends.ui.mypets.MyPetsFragment"
+        android:label="fragment_my_pets"
         tools:layout="@layout/fragment_location" />
 
     <fragment
         android:id="@+id/navigation_favorites"
-        android:name="com.example.furfriends.FavoritesFragment"
+        android:name="com.example.furfriends.ui.favorites.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.example.furfriends.ProfileFragment"
+        android:name="com.example.furfriends.ui.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 

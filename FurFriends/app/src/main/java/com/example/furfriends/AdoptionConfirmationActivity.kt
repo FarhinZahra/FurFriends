@@ -12,6 +12,10 @@ import com.example.furfriends.ui.adoptionconfirmation.AdoptionConfirmationViewMo
 class AdoptionConfirmationActivity : AppCompatActivity() {
 
     private val viewModel: AdoptionConfirmationViewModel by viewModels()
+    private var petName: String = ""
+    private var petOwnerId: String = ""
+    private var requesterName: String = ""
+    private var requesterPhone: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +32,7 @@ class AdoptionConfirmationActivity : AppCompatActivity() {
         // --- Observers ---
         observePetDetails()
         observeUserDetails()
+        observeAdoptionStatus()
 
         // --- Click Listeners ---
         findViewById<ImageView>(R.id.iv_back_arrow_confirm).setOnClickListener {
@@ -35,8 +40,13 @@ class AdoptionConfirmationActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.btn_confirm_adoption).setOnClickListener {
-            // Handle final adoption request logic here
-            // For example, send data to a server and then show a success message.
+            viewModel.submitAdoptionRequest(
+                petId = petId,
+                petName = petName,
+                ownerId = petOwnerId,
+                requesterName = requesterName,
+                requesterPhone = requesterPhone
+            )
         }
 
         // Tell the ViewModel to load the data
@@ -46,7 +56,9 @@ class AdoptionConfirmationActivity : AppCompatActivity() {
     private fun observePetDetails() {
         viewModel.petDetails.observe(this) { pet ->
             findViewById<TextView>(R.id.tv_pet_confirm_name).text = pet.name
-            findViewById<TextView>(R.id.tv_pet_confirm_details).text = pet.details
+            findViewById<TextView>(R.id.tv_pet_confirm_details).text = pet.displayDetails()
+            petName = pet.name
+            petOwnerId = pet.ownerId
             // We would also load the pet's image here using Glide or Picasso
         }
     }
@@ -55,6 +67,20 @@ class AdoptionConfirmationActivity : AppCompatActivity() {
         viewModel.userDetails.observe(this) { user ->
             findViewById<TextView>(R.id.tv_adopter_name).text = user.name
             findViewById<TextView>(R.id.tv_adopter_contact).text = user.phone
+            requesterName = user.name
+            requesterPhone = user.phone
+        }
+    }
+
+    private fun observeAdoptionStatus() {
+        viewModel.adoptionStatus.observe(this) { result ->
+            result.onSuccess {
+                Toast.makeText(this, "Adoption request sent!", Toast.LENGTH_LONG).show()
+                finish()
+            }
+            result.onFailure {
+                Toast.makeText(this, "Request failed: ${it.message}", Toast.LENGTH_LONG).show()
+            }
         }
     }
 }

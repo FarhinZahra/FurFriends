@@ -34,4 +34,49 @@ class ProfileRepository {
             Result.failure(e)
         }
     }
+
+    suspend fun getRequestsCount(): Result<Int> {
+        return try {
+            val firebaseUser = auth.currentUser ?: throw Exception("No user logged in")
+            val snapshot = db.collectionGroup("requests")
+                .whereEqualTo("ownerId", firebaseUser.uid)
+                .get()
+                .await()
+            Result.success(snapshot.size())
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getFavoritesCount(): Result<Int> {
+        return try {
+            val firebaseUser = auth.currentUser ?: throw Exception("No user logged in")
+            val snapshot = db.collection("users")
+                .document(firebaseUser.uid)
+                .collection("favorites")
+                .get()
+                .await()
+            Result.success(snapshot.size())
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun updatePetStatus(petId: String, status: String): Result<Unit> {
+        return try {
+            db.collection("pets").document(petId).update("status", status).await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun deletePet(petId: String): Result<Unit> {
+        return try {
+            db.collection("pets").document(petId).delete().await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }

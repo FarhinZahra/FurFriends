@@ -18,6 +18,9 @@ class AdoptionConfirmationViewModel : ViewModel() {
     private val _userDetails = MutableLiveData<User>()
     val userDetails: LiveData<User> = _userDetails
 
+    private val _adoptionStatus = MutableLiveData<Result<Unit>>()
+    val adoptionStatus: LiveData<Result<Unit>> = _adoptionStatus
+
     fun loadConfirmationData(petId: String) {
         viewModelScope.launch {
             repository.getPetDetails(petId).onSuccess {
@@ -31,6 +34,27 @@ class AdoptionConfirmationViewModel : ViewModel() {
             }.onFailure {
                 // Handle error
             }
+        }
+    }
+
+    fun submitAdoptionRequest(
+        petId: String,
+        petName: String,
+        ownerId: String,
+        requesterName: String,
+        requesterPhone: String,
+        message: String? = null
+    ) {
+        viewModelScope.launch {
+            val result = repository.createAdoptionRequest(
+                petId = petId,
+                petName = petName,
+                ownerId = ownerId,
+                requesterName = requesterName,
+                requesterPhone = requesterPhone,
+                message = message
+            )
+            _adoptionStatus.postValue(result)
         }
     }
 }

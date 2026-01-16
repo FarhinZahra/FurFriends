@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".PetDetailsActivity">
+    tools:context=".ui.pets.PetDetailsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -129,13 +129,42 @@
                 android:textColor="#757575"
                 tools:text="Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."/>
 
-            <Button
-                android:id="@+id/btn_chat_with_owner"
+            <TextView
+                android:id="@+id/tv_adoption_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="#bf592b"
+                android:textSize="12sp"
+                android:visibility="gone"
+                tools:text="Status: pending" />
+
+            <LinearLayout
+                android:id="@+id/ll_contact_actions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Chat with Owner"
-                app:icon="@drawable/ic_chat"/>
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_call_owner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Call"
+                    android:textColor="#572A12"
+                    android:backgroundTint="#edbea4" />
+
+                <Button
+                    android:id="@+id/btn_whatsapp_owner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:text="WhatsApp"
+                    android:textColor="#572A12"
+                    android:backgroundTint="#edbea4" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -152,3 +181,4 @@
         app:layout_anchorGravity="bottom|end" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+

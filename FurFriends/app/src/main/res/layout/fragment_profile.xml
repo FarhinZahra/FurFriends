@@ -6,28 +6,20 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:fillViewport="true"
-    tools:context=".ProfileFragment">
+    tools:context=".ui.profile.ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/iv_back_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:src="@drawable/ic_arrow_back" />
+        android:layout_height="wrap_content"
+        android:padding="24dp">
 
         <ImageView
             android:id="@+id/iv_edit_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
             android:src="@drawable/ic_edit"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_back_arrow" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_profile_picture"
@@ -38,7 +30,7 @@
             android:src="@drawable/img"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_back_arrow"
+            app:layout_constraintTop_toBottomOf="@+id/iv_edit_profile"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
             tools:src="@drawable/img" />
 
@@ -47,7 +39,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Morgan James"
             android:textColor="#572A12"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -57,120 +48,192 @@
             tools:text="Morgan James" />
 
         <TextView
+            android:id="@+id/tv_profile_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="#757575"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_profile_name"
+            tools:text="mjdesigner@gmail.com" />
+
+        <TextView
             android:id="@+id/tv_profile_bio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="32dp"
-            android:text="I am a very well-pleasing one who spends time with the animals."
+            android:layout_marginTop="16dp"
             android:textAlignment="center"
             android:textColor="#757575"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_profile_name"
-            tools:text="I am a very well-pleasing one who spends time with the animals." />
+            app:layout_constraintTop_toBottomOf="@id/tv_profile_email"
+            tools:text="Dhaka, Bangladesh" />
 
-        <TextView
-            android:id="@+id/tv_location_label"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/ll_stats"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
-            android:text="Location"
-            android:textColor="#572A12"
-            android:textStyle="bold"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_profile_bio" />
+            app:layout_constraintTop_toBottomOf="@id/tv_profile_bio">
 
-        <TextView
-            android:id="@+id/tv_location_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bursa, Türkiye"
-            android:textColor="#757575"
-            app:layout_constraintStart_toStartOf="@id/tv_location_label"
-            app:layout_constraintTop_toBottomOf="@id/tv_location_label"
-            tools:text="Bursa, Türkiye" />
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:id="@+id/tv_stat_posts_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#572A12"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        tools:text="0" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Posts"
+                        android:textColor="#757575"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:id="@+id/tv_stat_requests_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#572A12"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        tools:text="0" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Requests"
+                        android:textColor="#757575"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:id="@+id/tv_stat_favorites_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#572A12"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        tools:text="0" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Favorites"
+                        android:textColor="#757575"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_contact_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
+            android:layout_marginTop="24dp"
             android:text="Contact"
             android:textColor="#572A12"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_location_label" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_stats" />
 
         <TextView
             android:id="@+id/tv_contact_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+24500000000"
             android:textColor="#757575"
-            app:layout_constraintEnd_toEndOf="@id/tv_contact_label"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_contact_label"
-            tools:text="+24500000000" />
+            tools:text="017XXXXXXXX" />
 
         <TextView
-            android:id="@+id/tv_email_label"
+            android:id="@+id/tv_location_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Email"
+            android:text="Location"
             android:textColor="#572A12"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/tv_location_label"
-            app:layout_constraintTop_toBottomOf="@+id/tv_location_value" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_contact_value" />
 
         <TextView
-            android:id="@+id/tv_email_value"
+            android:id="@+id/tv_location_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="mjdesigner@gmail.com"
             android:textColor="#757575"
-            app:layout_constraintStart_toStartOf="@+id/tv_email_label"
-            app:layout_constraintTop_toBottomOf="@+id/tv_email_label"
-            tools:text="mjdesigner@gmail.com" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_location_label"
+            tools:text="Dhaka, Bangladesh" />
 
-        <TextView
-            android:id="@+id/tv_my_pets_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="My Pets"
-            android:textColor="#572A12"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/tv_email_label"
-            app:layout_constraintTop_toBottomOf="@+id/tv_email_value" />
-
-        <ImageView
-            android:id="@+id/iv_add_pet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:src="@drawable/ic_add"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_my_pets_label"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_my_pets_label" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_my_pets"
+        <Button
+            android:id="@+id/btn_logout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:text="Logout"
+            android:textColor="#572A12"
+            android:backgroundTint="#edbea4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_my_pets_label"
-            tools:listitem="@layout/item_my_pet"
-            tools:itemCount="2"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_location_value"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </ScrollView>

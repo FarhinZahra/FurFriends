@@ -13,45 +13,39 @@
 
         <!-- All secondary activities -->
         <activity
-            android:name=".ForgetPass"
+            android:name=".ui.auth.ForgetPass"
             android:exported="false" />
         <activity
-            android:name=".RegistrationActivity"
+            android:name=".ui.auth.RegistrationActivity"
             android:exported="false" />
         <activity
-            android:name=".LocationWithPetsActivity"
+            android:name=".ui.pets.PetDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".PetDetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProfileEditActivity"
+            android:name=".ui.profile.ProfileEditActivity"
             android:exported="false" />
         <activity
             android:name=".AdoptionConfirmationActivity"
             android:exported="false" />
         <activity
-            android:name=".UploadPetActivity"
+            android:name=".ui.pets.UploadPetActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.chat.ConversationListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.chat.ChatMessageActivity"
+            android:name=".ui.requests.OwnerRequestsActivity"
             android:exported="false" />
 
         <!-- Main entry point for fragments (after login) -->
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="true" />
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.auth.LoginActivity"
             android:exported="false" />
 
         <!-- Splash screen, the main entry point of the app -->
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.auth.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
