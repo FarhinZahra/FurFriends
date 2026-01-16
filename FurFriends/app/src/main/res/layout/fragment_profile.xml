@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:fillViewport="true"
+    tools:context=".ProfileFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_back_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/ic_arrow_back" />
+
+        <ImageView
+            android:id="@+id/iv_edit_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_back_arrow" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_profile_picture"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_back_arrow"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+            tools:src="@drawable/img" />
+
+        <TextView
+            android:id="@+id/tv_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Morgan James"
+            android:textColor="#572A12"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_profile_picture"
+            tools:text="Morgan James" />
+
+        <TextView
+            android:id="@+id/tv_profile_bio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:text="I am a very well-pleasing one who spends time with the animals."
+            android:textAlignment="center"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_profile_name"
+            tools:text="I am a very well-pleasing one who spends time with the animals." />
+
+        <TextView
+            android:id="@+id/tv_location_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:text="Location"
+            android:textColor="#572A12"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_profile_bio" />
+
+        <TextView
+            android:id="@+id/tv_location_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bursa, Türkiye"
+            android:textColor="#757575"
+            app:layout_constraintStart_toStartOf="@id/tv_location_label"
+            app:layout_constraintTop_toBottomOf="@id/tv_location_label"
+            tools:text="Bursa, Türkiye" />
+
+        <TextView
+            android:id="@+id/tv_contact_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:text="Contact"
+            android:textColor="#572A12"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_location_label" />
+
+        <TextView
+            android:id="@+id/tv_contact_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+24500000000"
+            android:textColor="#757575"
+            app:layout_constraintEnd_toEndOf="@id/tv_contact_label"
+            app:layout_constraintTop_toBottomOf="@id/tv_contact_label"
+            tools:text="+24500000000" />
+
+        <TextView
+            android:id="@+id/tv_email_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Email"
+            android:textColor="#572A12"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tv_location_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_location_value" />
+
+        <TextView
+            android:id="@+id/tv_email_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="mjdesigner@gmail.com"
+            android:textColor="#757575"
+            app:layout_constraintStart_toStartOf="@+id/tv_email_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_email_label"
+            tools:text="mjdesigner@gmail.com" />
+
+        <TextView
+            android:id="@+id/tv_my_pets_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="My Pets"
+            android:textColor="#572A12"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tv_email_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_email_value" />
+
+        <ImageView
+            android:id="@+id/iv_add_pet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:src="@drawable/ic_add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_my_pets_label"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_my_pets_label" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_my_pets"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_my_pets_label"
+            tools:listitem="@layout/item_my_pet"
+            tools:itemCount="2"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

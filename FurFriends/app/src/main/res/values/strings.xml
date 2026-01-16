@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">FurFriends</string>
+    <string name="logo_description">logo</string>
+    <string name="forgot_password_title">Forgot password?</string>
+    <string name="forgot_password_subtitle">Enter the email address associated with your account.</string>
+    <string name="email_address_label">Email Address</string>
+    <string name="enter_your_email_hint">Enter your email</string>
+    <string name="email_example">e.g. Remiola2054@gmail.com</string>
+    <string name="reset_password_info">We will send a link to reset your password to that email.</string>
+    <string name="reset_password_button">Reset password</string>
+    <string name="create_account_subtitle">Create a new account</string>
+    <string name="full_name_label">Full Name</string>
+    <string name="enter_full_name_hint">Enter your full name</string>
+    <string name="phone_number_label">Phone Number</string>
+    <string name="enter_phone_number_hint">Enter your phone number</string>
+    <string name="address_label">Address</string>
+    <string name="enter_address_hint">Enter your address</string>
+    <string name="password_label">Password</string>
+    <string name="enter_password_hint">Enter your password</string>
+    <string name="confirm_password_label">Confirm Password</string>
+    <string name="confirm_password_hint">Confirm your password</string>
+    <string name="register_button">Register</string>
+    <string name="back_to_login_text">Already have an account? Log in</string>
+    <string name="splash_screen_tagline">Your trusted source for quality pet food.</string>
+</resources>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_location_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/tv_location_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#572A12"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_location_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Yıldırım Belediyesi Hayvan Barınağı" />
+
+        <ImageView
+            android:id="@+id/iv_location_pin"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="8dp"
+            app:srcCompat="@drawable/ic_location_pin"
+            app:layout_constraintTop_toBottomOf="@id/tv_location_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_location_name" />
+
+        <TextView
+            android:id="@+id/tv_location_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="#757575"
+            app:layout_constraintTop_toTopOf="@+id/iv_location_pin"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_location_pin"
+            app:layout_constraintStart_toEndOf="@+id/iv_location_pin"
+            tools:text="10km" />
+
+        <TextView
+            android:id="@+id/tv_available_for"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Available for"
+            android:textColor="#4CAF50"
+            app:layout_constraintTop_toBottomOf="@+id/iv_location_pin"
+            app:layout_constraintStart_toStartOf="@+id/tv_location_name" />
+
+        <ImageView
+            android:id="@+id/iv_pet_icon_1"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="4dp"
+            app:srcCompat="@drawable/ic_pets"
+            app:layout_constraintEnd_toStartOf="@+id/iv_pet_icon_2"
+            app:layout_constraintTop_toTopOf="@+id/tv_available_for"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_available_for" />
+
+        <ImageView
+            android:id="@+id/iv_pet_icon_2"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            app:srcCompat="@drawable/ic_pets"
+            app:layout_constraintEnd_toEndOf="@+id/tv_location_name"
+            app:layout_constraintTop_toTopOf="@+id/tv_available_for"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_available_for" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
