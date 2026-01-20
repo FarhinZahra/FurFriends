@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furfriends.ui.pets.PetDetailsActivity
 import com.example.furfriends.R
+import com.google.android.material.chip.Chip
 
 class HomeFeedFragment : Fragment() {
 
@@ -38,6 +40,8 @@ class HomeFeedFragment : Fragment() {
 
         viewModel.feedPets.observe(viewLifecycleOwner) { pets ->
             feedAdapter.updatePets(pets)
+            view.findViewById<android.widget.TextView>(R.id.tv_feed_empty).visibility =
+                if (pets.isEmpty()) View.VISIBLE else View.GONE
         }
 
         viewModel.favoriteStatus.observe(viewLifecycleOwner) { result ->
@@ -53,6 +57,31 @@ class HomeFeedFragment : Fragment() {
             feedAdapter.setFavoriteIds(ids)
         }
 
+        viewModel.requestStatuses.observe(viewLifecycleOwner) { statuses ->
+            feedAdapter.setRequestStatuses(statuses)
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            view.findViewById<android.widget.ProgressBar>(R.id.pb_feed_loading).visibility =
+                if (isLoading) View.VISIBLE else View.GONE
+            if (isLoading) {
+                view.findViewById<android.widget.TextView>(R.id.tv_feed_empty).visibility = View.GONE
+            }
+        }
+
+        view.findViewById<Chip>(R.id.chip_all).setOnClickListener {
+            viewModel.setFilter("All")
+        }
+        view.findViewById<Chip>(R.id.chip_dog).setOnClickListener {
+            viewModel.setFilter("Dog")
+        }
+        view.findViewById<Chip>(R.id.chip_cat).setOnClickListener {
+            viewModel.setFilter("Cat")
+        }
+        view.findViewById<Chip>(R.id.chip_other).setOnClickListener {
+            viewModel.setFilter("Other")
+        }
+
         feedAdapter.onItemClick = { pet ->
             val intent = Intent(activity, PetDetailsActivity::class.java)
             intent.putExtra("petId", pet.id)
@@ -62,13 +91,22 @@ class HomeFeedFragment : Fragment() {
             viewModel.toggleFavorite(pet.id)
         }
 
+        view.findViewById<android.widget.ImageView>(R.id.iv_header_favorite).setOnClickListener {
+            findNavController().navigate(R.id.navigation_favorites)
+        }
+        view.findViewById<android.widget.ImageView>(R.id.iv_header_profile).setOnClickListener {
+            findNavController().navigate(R.id.navigation_profile)
+        }
+
         viewModel.loadFeed()
         viewModel.loadFavorites()
+        viewModel.loadRequestStatuses()
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.loadFeed()
         viewModel.loadFavorites()
+        viewModel.loadRequestStatuses()
     }
 }

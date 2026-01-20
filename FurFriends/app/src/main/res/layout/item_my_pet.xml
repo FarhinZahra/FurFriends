@@ -2,11 +2,13 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="150dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="8dp"
     app:cardCornerRadius="20dp"
     app:cardElevation="4dp"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    app:cardBackgroundColor="#FFF7F1">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,7 +17,7 @@
         <ImageView
             android:id="@+id/iv_my_pet_image"
             android:layout_width="0dp"
-            android:layout_height="120dp"
+            android:layout_height="140dp"
             android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -23,32 +25,192 @@
             tools:src="@tools:sample/animals" />
 
         <TextView
-            android:id="@+id/tv_my_pet_name"
+            android:id="@+id/tv_my_pet_status_pill"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/status_pill_bg"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
             android:textColor="#572A12"
-            android:textSize="14sp"
-            android:textStyle="bold"
+            android:textSize="11sp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Available" />
+
+        <TextView
+            android:id="@+id/tv_my_pet_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#572A12"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_my_pet_image"
-            app:layout_constraintBottom_toTopOf="@+id/tv_my_pet_status"
             tools:text="Kartopu" />
 
         <TextView
-            android:id="@+id/tv_my_pet_status"
+            android:id="@+id/tv_my_pet_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/chip_bg"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:textColor="#572A12"
+            android:textSize="11sp"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="1 year" />
+
+        <TextView
+            android:id="@+id/tv_my_pet_breed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/chip_bg"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:textColor="#572A12"
+            android:textSize="11sp"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="Mix" />
+
+        <TextView
+            android:id="@+id/tv_my_pet_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/chip_bg"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:textColor="#572A12"
+            android:textSize="11sp"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="5 kg" />
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flow_my_pet_chips"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginBottom="8dp"
-            android:textColor="#757575"
-            android:textSize="12sp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="6dp"
+            app:flow_horizontalGap="6dp"
+            app:flow_verticalGap="6dp"
+            app:flow_wrapMode="chain"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_my_pet_name"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="Status: available" />
+            app:constraint_referenced_ids="tv_my_pet_age,tv_my_pet_breed,tv_my_pet_weight" />
+
+        <TextView
+            android:id="@+id/tv_my_pet_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="6dp"
+            android:textColor="#8A6D5C"
+            android:textSize="12sp"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/flow_my_pet_chips"
+            tools:text="Mirpur, Dhaka" />
+
+        <LinearLayout
+            android:id="@+id/ll_my_pet_actions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/action_pill_bg"
+            android:orientation="horizontal"
+            android:padding="2dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_my_pet_location"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_my_pet_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="0dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:text="Edit"
+                android:textColor="#572A12"
+                android:textSize="12sp"
+                app:iconSize="16dp"
+                app:backgroundTint="#00000000"
+                app:icon="@drawable/ic_edit"
+                app:iconTint="#BF592B"
+                app:iconPadding="4dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_my_pet_adopted"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="0dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:text="Adopted"
+                android:textColor="#572A12"
+                android:textSize="12sp"
+                app:iconSize="16dp"
+                app:backgroundTint="#00000000"
+                app:icon="@drawable/ic_check"
+                app:iconTint="#BF592B"
+                app:iconPadding="4dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_my_pet_delete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="0dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:text="Delete"
+                android:textColor="#B23B3B"
+                android:textSize="12sp"
+                app:iconSize="16dp"
+                app:backgroundTint="#00000000"
+                app:icon="@drawable/ic_delete"
+                app:iconTint="#B23B3B"
+                app:iconPadding="4dp" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

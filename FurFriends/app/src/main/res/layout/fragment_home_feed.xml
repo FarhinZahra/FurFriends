@@ -4,43 +4,170 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#FEEFE6"
     tools:context=".ui.home.HomeFeedFragment">
-
-    <View
-        android:id="@+id/header_view"
-        android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#FEEFE6"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/tv_header_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/aclonica"
         android:text="@string/app_name"
         android:textColor="#bf592b"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@id/header_view"
-        app:layout_constraintBottom_toBottomOf="@id/header_view"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_feed_title"
+    <ImageView
+        android:id="@+id/iv_header_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="Favorites"
+        android:src="@drawable/ic_favorite_outline"
+        app:tint="#BF592B"
+        app:layout_constraintTop_toTopOf="@id/tv_header_title"
+        app:layout_constraintBottom_toBottomOf="@id/tv_header_title"
+        app:layout_constraintEnd_toStartOf="@id/iv_header_profile" />
+
+    <ImageView
+        android:id="@+id/iv_header_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="Profile"
+        android:src="@drawable/ic_profile"
+        app:tint="#BF592B"
+        app:layout_constraintTop_toTopOf="@id/tv_header_title"
+        app:layout_constraintBottom_toBottomOf="@id/tv_header_title"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_location_filter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="#FFF7F1"
+        app:layout_constraintTop_toBottomOf="@id/tv_header_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_location_pin"
+                app:tint="#BF592B" />
+
+            <TextView
+                android:id="@+id/tv_feed_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="Dhaka • Mirpur"
+                android:textColor="#572A12"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_arrow_next"
+                app:tint="#8A6D5C" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/cg_feed_filters"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="12dp"
+        app:singleSelection="true"
+        app:layout_constraintTop_toBottomOf="@id/card_location_filter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_all"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All"
+            android:checked="true"
+            android:textColor="#572A12"
+            app:chipBackgroundColor="#FFF7F1"
+            app:chipStrokeColor="#E9CBB8"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_dog"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dog"
+            android:textColor="#572A12"
+            app:chipBackgroundColor="#FFF7F1"
+            app:chipStrokeColor="#E9CBB8"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_cat"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cat"
+            android:textColor="#572A12"
+            app:chipBackgroundColor="#FFF7F1"
+            app:chipStrokeColor="#E9CBB8"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_other"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Other"
+            android:textColor="#572A12"
+            app:chipBackgroundColor="#FFF7F1"
+            app:chipStrokeColor="#E9CBB8"
+            app:chipStrokeWidth="1dp" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <ProgressBar
+        android:id="@+id/pb_feed_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Adoption Feed"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/poppins_bold"
-        android:textColor="#bf592b"
-        app:layout_constraintTop_toBottomOf="@id/header_view"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/cg_feed_filters"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_feed_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="No pets found in Mirpur."
+        android:textColor="#8A6D5C"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/cg_feed_filters"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -49,7 +176,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_feed_title"
+        android:paddingBottom="24dp"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/cg_feed_filters"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,6 +1,7 @@
 package com.example.furfriends.ui.favorites
 
 import com.example.furfriends.data.Pet
+import com.example.furfriends.data.PetMapper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
@@ -53,7 +54,7 @@ class FavoritesRepository {
                     .whereIn(FieldPath.documentId(), chunk)
                     .get()
                     .await()
-                pets += petsSnapshot.toObjects(Pet::class.java)
+                pets += PetMapper.fromQuery(petsSnapshot)
             }
             Result.success(pets)
         } catch (e: Exception) {

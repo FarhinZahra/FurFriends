@@ -16,6 +16,7 @@ class UploadPetRepository {
                 "name" to pet.name,
                 "age" to pet.age,
                 "breed" to pet.breed,
+                "type" to pet.type,
                 "weight" to pet.weight,
                 "story" to pet.story,
                 "imageUrls" to pet.imageUrls,

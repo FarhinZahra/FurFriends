@@ -22,7 +22,17 @@ class OwnerRequestsRepository {
             val requests = snapshot.toObjects(AdoptionRequest::class.java)
             Result.success(requests)
         } catch (e: Exception) {
-            Result.failure(e)
+            try {
+                val ownerId = auth.currentUser?.uid ?: throw Exception("No user logged in")
+                val snapshot = db.collectionGroup("requests")
+                    .whereEqualTo("ownerId", ownerId)
+                    .get()
+                    .await()
+                val requests = snapshot.toObjects(AdoptionRequest::class.java)
+                Result.success(requests)
+            } catch (fallback: Exception) {
+                Result.failure(fallback)
+            }
         }
     }
 

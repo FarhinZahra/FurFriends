@@ -22,13 +22,26 @@ class HomeFeedViewModel : ViewModel() {
     private val _favoriteIds = MutableLiveData<Set<String>>()
     val favoriteIds: LiveData<Set<String>> = _favoriteIds
 
+    private val _requestStatuses = MutableLiveData<Map<String, String>>()
+    val requestStatuses: LiveData<Map<String, String>> = _requestStatuses
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    private var allPets: List<Pet> = emptyList()
+    private var activeFilter: String = "All"
+
     fun loadFeed() {
         viewModelScope.launch {
+            _isLoading.postValue(true)
             repository.getFeedPets().onSuccess { pets ->
-                _feedPets.postValue(pets)
+                allPets = pets
+                applyFilter()
             }.onFailure {
-                _feedPets.postValue(emptyList())
+                allPets = emptyList()
+                applyFilter()
             }
+            _isLoading.postValue(false)
         }
     }
 
@@ -40,6 +53,33 @@ class HomeFeedViewModel : ViewModel() {
                 _favoriteIds.postValue(emptySet())
             }
         }
+    }
+
+    fun loadRequestStatuses() {
+        viewModelScope.launch {
+            repository.getMyRequestStatuses().onSuccess { map ->
+                _requestStatuses.postValue(map)
+            }.onFailure {
+                _requestStatuses.postValue(emptyMap())
+            }
+        }
+    }
+
+    fun setFilter(filter: String) {
+        activeFilter = filter
+        applyFilter()
+    }
+
+    private fun applyFilter() {
+        val filtered = when (activeFilter) {
+            "Dog" -> allPets.filter { it.type.equals("Dog", ignoreCase = true) }
+            "Cat" -> allPets.filter { it.type.equals("Cat", ignoreCase = true) }
+            "Other" -> allPets.filter {
+                it.type.isNotBlank() && !it.type.equals("Dog", ignoreCase = true) && !it.type.equals("Cat", ignoreCase = true)
+            }
+            else -> allPets
+        }
+        _feedPets.postValue(filtered)
     }
 
     fun toggleFavorite(petId: String) {

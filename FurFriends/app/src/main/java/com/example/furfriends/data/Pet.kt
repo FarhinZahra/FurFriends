@@ -11,6 +11,7 @@ data class Pet(
     val name: String = "",
     val age: String = "",
     val breed: String = "",
+    val type: String = "", // Dog/Cat/Other
     val weight: String = "",
     val story: String = "",
     val imageUrls: List<String> = emptyList(),

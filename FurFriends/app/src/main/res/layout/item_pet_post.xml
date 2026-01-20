@@ -6,10 +6,11 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
-    android:layout_marginTop="12dp"
-    app:cardCornerRadius="20dp"
+    android:layout_marginTop="16dp"
+    app:cardCornerRadius="22dp"
     app:cardElevation="4dp"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    app:cardBackgroundColor="#FFF7F1">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
         <ImageView
             android:id="@+id/iv_post_image"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="220dp"
             android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,9 +49,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="12dp"
+            android:background="@drawable/status_pill_bg"
             android:padding="8dp"
             android:src="@drawable/ic_favorite_outline"
-            app:tint="#FFFFFF"
+            app:tint="#BF592B"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -59,9 +61,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginTop="12dp"
             android:textColor="#572A12"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_post_image"
@@ -73,6 +76,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
@@ -126,8 +130,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginTop="6dp"
-            android:textColor="#757575"
+            android:textColor="#8A6D5C"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ll_post_chips"

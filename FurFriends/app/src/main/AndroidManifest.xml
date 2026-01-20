@@ -22,6 +22,9 @@
             android:name=".ui.pets.PetDetailsActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.pets.PetEditActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.profile.ProfileEditActivity"
             android:exported="false" />
         <activity

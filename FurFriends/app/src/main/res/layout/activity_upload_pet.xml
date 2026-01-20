@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp">
+        android:padding="20dp">
 
         <!-- Header -->
         <ImageView
@@ -23,79 +23,250 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tv_upload_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Create Post"
+            android:textColor="#572A12"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/iv_back_arrow_upload"
+            app:layout_constraintTop_toTopOf="@id/iv_back_arrow_upload"
+            app:layout_constraintBottom_toBottomOf="@id/iv_back_arrow_upload" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/tv_upload_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="UPLOAD"
-            android:textColor="#bf592b"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:text="Publish"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="#BF592B"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_back_arrow_upload"
             app:layout_constraintBottom_toBottomOf="@id/iv_back_arrow_upload" />
 
         <!-- Pet Image -->
-        <ImageView
-            android:id="@+id/iv_pet_image_upload"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_upload_media"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="220dp"
             android:layout_marginTop="16dp"
-            android:scaleType="centerCrop"
-            android:background="#FFFFFF"
-            android:src="@drawable/ic_pets" 
-            app:layout_constraintTop_toBottomOf="@+id/iv_back_arrow_upload"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <!-- Pet Details Form -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/iv_pet_image_upload"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="3dp"
+            app:cardBackgroundColor="#FFF7F1"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintTop_toBottomOf="@id/iv_back_arrow_upload"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <EditText
-                android:id="@+id/et_pet_name_upload"
+            <ImageView
+                android:id="@+id/iv_pet_image_upload"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_pets" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_pet_images_upload"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/card_upload_media"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/item_image_preview" />
+
+        <TextView
+            android:id="@+id/tv_pet_images_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Tap photo to add up to 5 images"
+            android:textColor="#8A6D5C"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/rv_pet_images_upload"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_pet_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFF7F1"
+            app:layout_constraintTop_toBottomOf="@id/tv_pet_images_hint"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Pet Name"/>
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <EditText
-                android:id="@+id/et_pet_breed_upload"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pet Info"
+                    android:textColor="#572A12"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_pet_name_upload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_bg"
+                    android:hint="Pet Name" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/et_pet_type_upload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_bg"
+                    android:hint="Type (Dog/Cat/Other)" />
+
+                <EditText
+                    android:id="@+id/et_pet_breed_upload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_bg"
+                    android:hint="Breed" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_pet_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFF7F1"
+            app:layout_constraintTop_toBottomOf="@id/card_pet_info"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Breed"/>
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <EditText
-                android:id="@+id/et_pet_age_upload"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Details"
+                    android:textColor="#572A12"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_pet_age_upload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_bg"
+                    android:hint="Age (e.g., 2 years)" />
+
+                <EditText
+                    android:id="@+id/et_pet_weight_upload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_bg"
+                    android:hint="Weight (e.g., 15 kg)" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_pet_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFF7F1"
+            app:layout_constraintTop_toBottomOf="@id/card_pet_details"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Age (e.g., 2 years)"/>
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <EditText
-                android:id="@+id/et_pet_weight_upload"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location"
+                    android:textColor="#572A12"
+                    android:textStyle="bold" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/et_pet_location_upload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_bg"
+                    android:hint="Location (Dhaka area)" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_pet_story"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFF7F1"
+            app:layout_constraintTop_toBottomOf="@id/card_pet_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Weight (e.g., 15 kg)"/>
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <AutoCompleteTextView
-                android:id="@+id/et_pet_location_upload"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Location (Dhaka area)"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Story"
+                    android:textColor="#572A12"
+                    android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/et_pet_story_upload"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="About / Story"
-                android:lines="4"
-                android:gravity="top"/>
+                <EditText
+                    android:id="@+id/et_pet_story_upload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_bg"
+                    android:gravity="top"
+                    android:hint="About / Story"
+                    android:lines="4" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_post_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="All fields are required."
+            android:textColor="#8A6D5C"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/card_pet_story"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

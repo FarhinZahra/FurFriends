@@ -2,6 +2,7 @@ package com.example.furfriends.ui.petdetails
 
 import com.example.furfriends.data.AdoptionRequest
 import com.example.furfriends.data.Pet
+import com.example.furfriends.data.PetMapper
 import com.example.furfriends.data.User
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -14,7 +15,7 @@ class PetDetailsRepository {
     suspend fun getPetDetails(petId: String): Result<Pet> {
         return try {
             val document = db.collection("pets").document(petId).get().await()
-            val pet = document.toObject(Pet::class.java) ?: throw Exception("Pet not found")
+            val pet = PetMapper.fromDocument(document)
             Result.success(pet)
         } catch (e: Exception) {
             Result.failure(e)

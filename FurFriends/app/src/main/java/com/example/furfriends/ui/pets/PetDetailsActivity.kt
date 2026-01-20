@@ -9,19 +9,21 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import coil.load
 import com.example.furfriends.AdoptionConfirmationActivity
 import com.example.furfriends.R
 import com.example.furfriends.ui.petdetails.PetDetailsViewModel
 import com.google.android.material.chip.Chip
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.button.MaterialButton
 
 class PetDetailsActivity : AppCompatActivity() {
 
     private val viewModel: PetDetailsViewModel by viewModels()
     private var ownerPhone: String = ""
     private var requestStatus: String? = null
+    private lateinit var imagePager: ViewPager2
+    private lateinit var imageAdapter: PetImagePagerAdapter
+    private lateinit var requestButton: MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +37,7 @@ class PetDetailsActivity : AppCompatActivity() {
         }
 
         // --- Setup ---
-        setupToolbar()
+        setupImagePager()
         observePetDetails()
         observeOwnerDetails()
         observeRequestStatus()
@@ -45,16 +47,15 @@ class PetDetailsActivity : AppCompatActivity() {
         viewModel.loadPetDetails(petId)
     }
 
-    private fun setupToolbar() {
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
+    private fun setupImagePager() {
+        imagePager = findViewById(R.id.vp_pet_images)
+        imageAdapter = PetImagePagerAdapter(emptyList())
+        imagePager.adapter = imageAdapter
     }
 
     private fun setupClickListeners(petId: String) {
-        findViewById<FloatingActionButton>(R.id.fab_adopt).setOnClickListener {
+        requestButton = findViewById(R.id.btn_request_adoption)
+        requestButton.setOnClickListener {
             if (!requestStatus.isNullOrBlank()) {
                 Toast.makeText(this, "You already requested adoption", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -62,6 +63,10 @@ class PetDetailsActivity : AppCompatActivity() {
             val intent = Intent(this, AdoptionConfirmationActivity::class.java)
             intent.putExtra("petId", petId)
             startActivity(intent)
+        }
+
+        findViewById<ImageView>(R.id.iv_pet_back).setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
 
         findViewById<Button>(R.id.btn_call_owner).setOnClickListener {
@@ -74,7 +79,6 @@ class PetDetailsActivity : AppCompatActivity() {
     }
 
     private fun observePetDetails() {
-        val petImageView: ImageView = findViewById(R.id.iv_pet_detail_image)
         viewModel.petDetails.observe(this) { pet ->
             findViewById<TextView>(R.id.tv_pet_detail_name).text = pet.name
             findViewById<Chip>(R.id.chip_age).text = pet.age
@@ -82,17 +86,17 @@ class PetDetailsActivity : AppCompatActivity() {
             findViewById<Chip>(R.id.chip_weight).text = pet.weight
             findViewById<TextView>(R.id.tv_pet_detail_location).text = pet.locationName
             findViewById<TextView>(R.id.tv_pet_detail_about).text = pet.story
-
-            petImageView.load(pet.imageUrls.firstOrNull()) {
-                placeholder(R.drawable.logo)
-                error(R.drawable.logo)
-            }
+            findViewById<TextView>(R.id.tv_pet_status_pill).text = pet.status.replaceFirstChar { it.uppercaseChar() }
+            val images = if (pet.imageUrls.isEmpty()) listOf("") else pet.imageUrls
+            imageAdapter.submitImages(images)
         }
     }
 
     private fun observeOwnerDetails() {
         viewModel.ownerDetails.observe(this) { owner ->
             ownerPhone = owner.phone
+            findViewById<TextView>(R.id.tv_owner_name).text = owner.name.ifBlank { "Pet Owner" }
+            findViewById<TextView>(R.id.tv_owner_phone).text = owner.phone
         }
     }
 
@@ -100,16 +104,17 @@ class PetDetailsActivity : AppCompatActivity() {
         viewModel.requestStatus.observe(this) { status ->
             requestStatus = status
             val statusView = findViewById<TextView>(R.id.tv_adoption_status)
-            val adoptFab = findViewById<FloatingActionButton>(R.id.fab_adopt)
             if (status.isNullOrBlank()) {
                 statusView.visibility = android.view.View.GONE
-                adoptFab.isEnabled = true
-                adoptFab.alpha = 1.0f
+                requestButton.isEnabled = true
+                requestButton.text = "Request Adoption"
+                requestButton.alpha = 1.0f
             } else {
                 statusView.visibility = android.view.View.VISIBLE
                 statusView.text = "Status: $status"
-                adoptFab.isEnabled = false
-                adoptFab.alpha = 0.5f
+                requestButton.isEnabled = false
+                requestButton.text = "Request Sent"
+                requestButton.alpha = 0.6f
             }
         }
     }

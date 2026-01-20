@@ -16,6 +16,7 @@ class AdoptionConfirmationActivity : AppCompatActivity() {
     private var petOwnerId: String = ""
     private var requesterName: String = ""
     private var requesterPhone: String = ""
+    private lateinit var confirmButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +40,17 @@ class AdoptionConfirmationActivity : AppCompatActivity() {
             finish() // Close the activity and go back
         }
 
-        findViewById<Button>(R.id.btn_confirm_adoption).setOnClickListener {
+        confirmButton = findViewById(R.id.btn_confirm_adoption)
+        confirmButton.isEnabled = false
+        confirmButton.setOnClickListener {
+            if (petOwnerId.isBlank() || petName.isBlank()) {
+                Toast.makeText(this, "Pet info not loaded yet", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (petOwnerId == com.google.firebase.auth.FirebaseAuth.getInstance().currentUser?.uid) {
+                Toast.makeText(this, "You cannot request your own pet", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             viewModel.submitAdoptionRequest(
                 petId = petId,
                 petName = petName,
@@ -60,6 +71,7 @@ class AdoptionConfirmationActivity : AppCompatActivity() {
             petName = pet.name
             petOwnerId = pet.ownerId
             // We would also load the pet's image here using Glide or Picasso
+            updateConfirmButtonState()
         }
     }
 
@@ -69,6 +81,7 @@ class AdoptionConfirmationActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.tv_adopter_contact).text = user.phone
             requesterName = user.name
             requesterPhone = user.phone
+            updateConfirmButtonState()
         }
     }
 
@@ -82,5 +95,10 @@ class AdoptionConfirmationActivity : AppCompatActivity() {
                 Toast.makeText(this, "Request failed: ${it.message}", Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    private fun updateConfirmButtonState() {
+        confirmButton.isEnabled = petOwnerId.isNotBlank() && petName.isNotBlank()
+        confirmButton.alpha = if (confirmButton.isEnabled) 1.0f else 0.5f
     }
 }

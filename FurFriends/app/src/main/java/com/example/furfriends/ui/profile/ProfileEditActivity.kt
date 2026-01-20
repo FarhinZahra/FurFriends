@@ -1,15 +1,20 @@
 package com.example.furfriends.ui.profile
 
+import android.net.Uri
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import coil.load
 import com.example.furfriends.R
 import com.example.furfriends.data.User
 import com.example.furfriends.ui.profileedit.ProfileEditViewModel
+import com.google.android.material.button.MaterialButton
+import java.io.File
+import java.io.FileOutputStream
 
 class ProfileEditActivity : AppCompatActivity() {
 
@@ -19,10 +24,23 @@ class ProfileEditActivity : AppCompatActivity() {
     private lateinit var etUsername: EditText
     private lateinit var etContact: EditText
     private lateinit var etEmail: EditText
-    private lateinit var etBio: EditText
     private lateinit var etLocation: EditText
-    // We'll treat birth date as a simple string for now
-    private lateinit var etBirthDate: EditText
+    private lateinit var profileImageView: ImageView
+    private var selectedPhotoPath: String? = null
+
+    private val imagePicker = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        if (uri == null) return@registerForActivityResult
+        val path = copyImageToInternal(uri)
+        if (path == null) {
+            Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show()
+            return@registerForActivityResult
+        }
+        selectedPhotoPath = path
+        profileImageView.load(File(path)) {
+            placeholder(R.drawable.img)
+            error(R.drawable.img)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,9 +64,8 @@ class ProfileEditActivity : AppCompatActivity() {
         etUsername = findViewById(R.id.et_username_edit)
         etContact = findViewById(R.id.et_contact_edit)
         etEmail = findViewById(R.id.et_email_edit)
-        etBio = findViewById(R.id.et_bio_edit)
         etLocation = findViewById(R.id.et_location_edit)
-        etBirthDate = findViewById(R.id.et_birthdate_edit)
+        profileImageView = findViewById(R.id.iv_profile_picture_edit)
     }
 
     private fun setupListeners() {
@@ -57,9 +74,16 @@ class ProfileEditActivity : AppCompatActivity() {
             finish() // Close the activity and go back
         }
 
-        val saveButton: TextView = findViewById(R.id.tv_save_button)
+        val saveButton: MaterialButton = findViewById(R.id.tv_save_button)
         saveButton.setOnClickListener {
             saveProfile()
+        }
+
+        profileImageView.setOnClickListener {
+            imagePicker.launch(arrayOf("image/*"))
+        }
+        findViewById<android.widget.TextView>(R.id.tv_change_photo).setOnClickListener {
+            imagePicker.launch(arrayOf("image/*"))
         }
     }
 
@@ -69,8 +93,13 @@ class ProfileEditActivity : AppCompatActivity() {
             etContact.setText(user.phone)
             etEmail.setText(user.email)
             etLocation.setText(user.address)
-            // Bio and BirthDate would be new fields in your User model
-            // For now, we leave them blank or with placeholder text
+            selectedPhotoPath = user.photoUrl.ifBlank { null }
+            val photo = user.photoUrl
+            val data = if (photo.startsWith("/")) File(photo) else photo
+            profileImageView.load(data) {
+                placeholder(R.drawable.img)
+                error(R.drawable.img)
+            }
         }
     }
 
@@ -93,11 +122,26 @@ class ProfileEditActivity : AppCompatActivity() {
             email = viewModel.userProfile.value?.email ?: "",
             name = etUsername.text.toString().trim(),
             phone = etContact.text.toString().trim(),
-            address = etLocation.text.toString().trim()
+            address = etLocation.text.toString().trim(),
+            photoUrl = selectedPhotoPath ?: viewModel.userProfile.value?.photoUrl.orEmpty()
             // We would also save Bio and BirthDate here
         )
 
         viewModel.updateUserProfile(updatedUser)
+    }
+
+    private fun copyImageToInternal(uri: Uri): String? {
+        return try {
+            val input = contentResolver.openInputStream(uri) ?: return null
+            val file = File(filesDir, "profile_${System.currentTimeMillis()}.jpg")
+            FileOutputStream(file).use { output ->
+                input.copyTo(output)
+            }
+            input.close()
+            file.absolutePath
+        } catch (e: Exception) {
+            null
+        }
     }
 }
 

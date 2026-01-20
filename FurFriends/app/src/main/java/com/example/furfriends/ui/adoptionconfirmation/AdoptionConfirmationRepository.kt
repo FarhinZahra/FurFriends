@@ -2,9 +2,11 @@ package com.example.furfriends.ui.adoptionconfirmation
 
 import com.example.furfriends.data.AdoptionRequest
 import com.example.furfriends.data.Pet
+import com.example.furfriends.data.PetMapper
 import com.example.furfriends.data.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FieldValue
 import kotlinx.coroutines.tasks.await
 
 class AdoptionConfirmationRepository {
@@ -16,7 +18,7 @@ class AdoptionConfirmationRepository {
     suspend fun getPetDetails(petId: String): Result<Pet> {
         return try {
             val document = db.collection("pets").document(petId).get().await()
-            val pet = document.toObject(Pet::class.java) ?: throw Exception("Pet not found")
+            val pet = PetMapper.fromDocument(document)
             Result.success(pet)
         } catch (e: Exception) {
             Result.failure(e)
@@ -45,15 +47,16 @@ class AdoptionConfirmationRepository {
     ): Result<Unit> {
         return try {
             val firebaseUser = auth.currentUser ?: throw Exception("No user logged in")
-            val request = AdoptionRequest(
-                petId = petId,
-                petName = petName,
-                ownerId = ownerId,
-                requesterId = firebaseUser.uid,
-                requesterName = requesterName,
-                requesterPhone = requesterPhone,
-                status = "pending",
-                message = message ?: ""
+            val request = hashMapOf<String, Any>(
+                "petId" to petId,
+                "petName" to petName,
+                "ownerId" to ownerId,
+                "requesterId" to firebaseUser.uid,
+                "requesterName" to requesterName,
+                "requesterPhone" to requesterPhone,
+                "status" to "pending",
+                "message" to (message ?: ""),
+                "createdAt" to FieldValue.serverTimestamp()
             )
             db.collection("pets")
                 .document(petId)

@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.furfriends.R
 import com.example.furfriends.ui.pets.PetDetailsActivity
@@ -25,7 +26,7 @@ class FavoritesFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_favorites, container, false)
 
         val favoritesRecyclerView: RecyclerView = view.findViewById(R.id.rv_favorite_pets)
-        favoritesRecyclerView.layoutManager = GridLayoutManager(context, 2) // 2 columns
+        favoritesRecyclerView.layoutManager = LinearLayoutManager(context)
 
         // Initialize the adapter with an empty list
         favoritesAdapter = FavoritesAdapter(emptyList())
@@ -41,6 +42,10 @@ class FavoritesFragment : Fragment() {
         viewModel.favoritePets.observe(viewLifecycleOwner) { pets ->
             // Update the adapter with the new list of pets
             favoritesAdapter.updatePets(pets)
+            view.findViewById<android.widget.ProgressBar>(R.id.pb_favorites_loading).visibility = View.GONE
+            view.findViewById<android.widget.TextView>(R.id.tv_favorites_count).text = "${pets.size} saved"
+            view.findViewById<android.widget.LinearLayout>(R.id.ll_favorites_empty).visibility =
+                if (pets.isEmpty()) View.VISIBLE else View.GONE
         }
 
         viewModel.toggleStatus.observe(viewLifecycleOwner) { result ->
@@ -61,11 +66,20 @@ class FavoritesFragment : Fragment() {
         }
 
         // Tell the ViewModel to load the data
+        view.findViewById<android.widget.ProgressBar>(R.id.pb_favorites_loading).visibility = View.VISIBLE
+        view.findViewById<android.widget.LinearLayout>(R.id.ll_favorites_empty).visibility = View.GONE
         viewModel.loadFavoritePets()
+
+        view.findViewById<com.google.android.material.button.MaterialButton>(R.id.btn_favorites_explore)
+            .setOnClickListener {
+                findNavController().navigate(R.id.navigation_home)
+            }
     }
 
     override fun onResume() {
         super.onResume()
+        view?.findViewById<android.widget.ProgressBar>(R.id.pb_favorites_loading)?.visibility = View.VISIBLE
+        view?.findViewById<android.widget.LinearLayout>(R.id.ll_favorites_empty)?.visibility = View.GONE
         viewModel.loadFavoritePets()
     }
 }

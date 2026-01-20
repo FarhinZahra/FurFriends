@@ -1,6 +1,7 @@
 package com.example.furfriends.ui.profile
 
 import com.example.furfriends.data.Pet
+import com.example.furfriends.data.PetMapper
 import com.example.furfriends.data.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -28,7 +29,7 @@ class ProfileRepository {
         return try {
             val firebaseUser = auth.currentUser ?: throw Exception("No user logged in")
             val snapshot = db.collection("pets").whereEqualTo("ownerId", firebaseUser.uid).get().await()
-            val pets = snapshot.toObjects(Pet::class.java)
+            val pets = PetMapper.fromQuery(snapshot)
             Result.success(pets)
         } catch (e: Exception) {
             Result.failure(e)

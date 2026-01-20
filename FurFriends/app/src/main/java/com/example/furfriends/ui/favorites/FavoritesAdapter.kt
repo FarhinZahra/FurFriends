@@ -3,13 +3,13 @@ package com.example.furfriends.ui.favorites
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.furfriends.R
 import com.example.furfriends.data.Pet
+import java.io.File
 
 class FavoritesAdapter(private var pets: List<Pet>) : RecyclerView.Adapter<FavoritesAdapter.PetViewHolder>() {
 
@@ -41,19 +41,37 @@ class FavoritesAdapter(private var pets: List<Pet>) : RecyclerView.Adapter<Favor
 
     class PetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val nameTextView: TextView = itemView.findViewById(R.id.tv_pet_name)
-        private val detailsTextView: TextView = itemView.findViewById(R.id.tv_pet_details)
+        private val ageChip: TextView = itemView.findViewById(R.id.tv_favorite_chip_age)
+        private val breedChip: TextView = itemView.findViewById(R.id.tv_favorite_chip_breed)
+        private val weightChip: TextView = itemView.findViewById(R.id.tv_favorite_chip_weight)
+        private val statusTextView: TextView = itemView.findViewById(R.id.tv_favorite_status)
+        private val locationTextView: TextView = itemView.findViewById(R.id.tv_favorite_location)
         private val imageView: ImageView = itemView.findViewById(R.id.iv_pet_image)
-        private val adoptButton: Button = itemView.findViewById(R.id.btn_adopt)
         val favoriteIcon: ImageView = itemView.findViewById(R.id.iv_favorite_icon)
 
         fun bind(pet: Pet) {
             nameTextView.text = pet.name
-            detailsTextView.text = pet.displayDetails()
+            statusTextView.text = pet.status.replaceFirstChar { it.uppercaseChar() }
+            locationTextView.text = pet.locationName
+            applyChip(ageChip, pet.age)
+            applyChip(breedChip, pet.breed)
+            applyChip(weightChip, pet.weight)
 
             // Load the image from the URL using Coil
-            imageView.load(pet.imageUrls.firstOrNull()) {
+            val image = pet.imageUrls.firstOrNull()
+            val data = if (image != null && image.startsWith("/")) File(image) else image
+            imageView.load(data) {
                 placeholder(R.drawable.logo)
                 error(R.drawable.logo)
+            }
+        }
+
+        private fun applyChip(view: TextView, value: String) {
+            if (value.isBlank()) {
+                view.visibility = View.GONE
+            } else {
+                view.visibility = View.VISIBLE
+                view.text = value
             }
         }
     }

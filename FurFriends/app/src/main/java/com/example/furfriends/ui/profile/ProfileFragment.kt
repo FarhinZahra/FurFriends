@@ -7,11 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import coil.load
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.furfriends.R
 import com.example.furfriends.ui.auth.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
+import java.io.File
 
 class ProfileFragment : Fragment() {
 
@@ -34,6 +36,13 @@ class ProfileFragment : Fragment() {
             view.findViewById<TextView>(R.id.tv_profile_bio).text = user.address.ifBlank { "Dhaka, Bangladesh" }
             view.findViewById<TextView>(R.id.tv_location_value).text = user.address
             view.findViewById<TextView>(R.id.tv_contact_value).text = user.phone
+            val photoView = view.findViewById<ImageView>(R.id.iv_profile_picture)
+            val photo = user.photoUrl
+            val data = if (photo.startsWith("/")) File(photo) else photo
+            photoView.load(data) {
+                placeholder(R.drawable.img)
+                error(R.drawable.img)
+            }
         }
 
         viewModel.postsCount.observe(viewLifecycleOwner) { count ->
@@ -48,9 +57,12 @@ class ProfileFragment : Fragment() {
             view.findViewById<TextView>(R.id.tv_stat_favorites_value).text = count.toString()
         }
 
+        val editIntent = Intent(activity, ProfileEditActivity::class.java)
         view.findViewById<ImageView>(R.id.iv_edit_profile).setOnClickListener {
-            val intent = Intent(activity, ProfileEditActivity::class.java)
-            startActivity(intent)
+            startActivity(editIntent)
+        }
+        view.findViewById<com.google.android.material.button.MaterialButton>(R.id.btn_edit_profile).setOnClickListener {
+            startActivity(editIntent)
         }
 
         view.findViewById<android.widget.Button>(R.id.btn_logout).setOnClickListener {

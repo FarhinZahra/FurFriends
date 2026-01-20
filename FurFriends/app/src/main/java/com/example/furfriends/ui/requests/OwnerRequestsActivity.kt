@@ -33,6 +33,9 @@ class OwnerRequestsActivity : AppCompatActivity() {
 
         viewModel.requests.observe(this) { requests ->
             adapter.updateRequests(requests)
+            findViewById<android.widget.ProgressBar>(R.id.pb_requests_loading).visibility = android.view.View.GONE
+            findViewById<android.widget.TextView>(R.id.tv_requests_empty).visibility =
+                if (requests.isEmpty()) android.view.View.VISIBLE else android.view.View.GONE
         }
 
         viewModel.actionStatus.observe(this) { result ->
@@ -42,6 +45,8 @@ class OwnerRequestsActivity : AppCompatActivity() {
             }
         }
 
+        findViewById<android.widget.ProgressBar>(R.id.pb_requests_loading).visibility = android.view.View.VISIBLE
+        findViewById<android.widget.TextView>(R.id.tv_requests_empty).visibility = android.view.View.GONE
         viewModel.loadRequests()
     }
 

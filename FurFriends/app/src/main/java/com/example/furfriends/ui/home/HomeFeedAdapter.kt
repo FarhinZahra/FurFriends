@@ -10,12 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.furfriends.R
 import com.example.furfriends.data.Pet
+import java.io.File
 
 class HomeFeedAdapter(private var pets: List<Pet>) : RecyclerView.Adapter<HomeFeedAdapter.PostViewHolder>() {
 
     var onItemClick: ((Pet) -> Unit)? = null
     var onFavoriteToggle: ((Pet) -> Unit)? = null
     private var favoriteIds: Set<String> = emptySet()
+    private var requestStatuses: Map<String, String> = emptyMap()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_pet_post, parent, false)
@@ -24,7 +26,7 @@ class HomeFeedAdapter(private var pets: List<Pet>) : RecyclerView.Adapter<HomeFe
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val pet = pets[position]
-        holder.bind(pet, favoriteIds.contains(pet.id))
+        holder.bind(pet, favoriteIds.contains(pet.id), requestStatuses[pet.id])
         holder.itemView.setOnClickListener { onItemClick?.invoke(pet) }
         holder.favoriteIcon.setOnClickListener { onFavoriteToggle?.invoke(pet) }
         holder.viewButton.setOnClickListener { onItemClick?.invoke(pet) }
@@ -42,6 +44,11 @@ class HomeFeedAdapter(private var pets: List<Pet>) : RecyclerView.Adapter<HomeFe
         notifyDataSetChanged()
     }
 
+    fun setRequestStatuses(statuses: Map<String, String>) {
+        requestStatuses = statuses
+        notifyDataSetChanged()
+    }
+
     class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val nameTextView: TextView = itemView.findViewById(R.id.tv_post_name)
         private val ageChip: TextView = itemView.findViewById(R.id.tv_chip_age)
@@ -53,17 +60,20 @@ class HomeFeedAdapter(private var pets: List<Pet>) : RecyclerView.Adapter<HomeFe
         val favoriteIcon: ImageView = itemView.findViewById(R.id.iv_post_favorite)
         val viewButton: Button = itemView.findViewById(R.id.btn_post_view)
 
-        fun bind(pet: Pet, isFavorite: Boolean) {
+        fun bind(pet: Pet, isFavorite: Boolean, requestStatus: String?) {
             nameTextView.text = pet.name
             applyChip(ageChip, pet.age)
             applyChip(breedChip, pet.breed)
             applyChip(weightChip, pet.weight)
             locationTextView.text = pet.locationName
-            statusView.text = pet.status.replaceFirstChar { it.uppercaseChar() }
+            val statusText = requestStatus ?: pet.status
+            statusView.text = statusText.replaceFirstChar { it.uppercaseChar() }
             favoriteIcon.setImageResource(
                 if (isFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite_outline
             )
-            imageView.load(pet.imageUrls.firstOrNull()) {
+            val image = pet.imageUrls.firstOrNull()
+            val data = if (image != null && image.startsWith("/")) File(image) else image
+            imageView.load(data) {
                 placeholder(R.drawable.logo)
                 error(R.drawable.logo)
             }
